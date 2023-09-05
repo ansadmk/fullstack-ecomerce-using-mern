@@ -1,0 +1,24 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+.hover {
+  transition: all 2s;
+}
+.hover:hover {
+  background-color: rgb(20, 19, 19);
+  color: white;
+  transform: scale(1.05);
+}
+/* 
+body {
+  background-image: url("https://thumbs.dreamstime.com/b/vector-pet-pattern-seamless-background-illustration-114149143.jpg");
+} */
+.sec{
+  background-image: url('https://i.pinimg.com/564x/f4/69/b7/f469b70b8893936625ca0d5b20089455.jpg');
+}
+.hide::after{
+  
+  color: transparent;
+}
