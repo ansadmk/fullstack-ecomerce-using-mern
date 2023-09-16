@@ -18,6 +18,7 @@ import Addproduct from "./pages/adminSide/addproduct";
 import { AllUsers } from "./data/AllUsers";
 import { Allproducts } from "./data/Allproducts";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useCookies } from "react-cookie";
 
 
 
@@ -27,8 +28,8 @@ function App() {
   const [state, setState] = useState(AllUsers);
   const [product, setProduct] = useState(Allproducts);
   const [arr, setArr] = useState("");
-  
-
+  const[cookie]=useCookies()
+  console.log(cookie);
   return (
     <Users.Provider
       value={{
@@ -48,7 +49,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home/:id" element={<Homepage />} />
-        <Route path="/adminhome" element={cur=="Admin"?<Adminhome/>:<Login/>}>
+        <Route path="/adminhome" element={cookie.access_token_admin? <Adminhome/>:<Login/>}>
           <Route index element={<Userlist/>} />
           <Route path="userlist" element={<Userlist/>} />
           <Route path="Productlist" element={<Productlist/>} />

@@ -5,41 +5,43 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 function loginpage() {
-  // const { setCur, state } = useContext(Users);
+  const { setCur, state } = useContext(Users);
   const nav = useNavigate();
   const [_, setCookies] = useCookies(["access_token"]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     const username = e.target.user.value;
     const pass = e.target.pass.value;
-    // const dup = [...state];
-    // const result = dup.filter(
-    //   (a) =>
-    //     a.username == e.target.user.value && a.password == e.target.pass.value
-    // );
-
-    // if (e.target.user.value == "Admin" && e.target.pass.value == "Admin") {
-    //   nav("/adminhome");
-    //   setCur((a) => (a = "Admin"));
-    // } else if (result == "") {
-    //   alert("Wrong password or username");
-    // } else {
-    //   setCur((a) => (a = result[0].id));
-    //   nav(`/main/${result[0].firstname + "" + result[0].lastname}`);
-    //   console.log("sucess");
-    // }
-
-    // e.target.reset();
-    // return result[0].id;
-    const res = await axios.post("http://localhost:3000/api/users/login", {
-      username: username,
-      password: pass,
-    });
-    if(res.data.status=="success" && res.data.data.userid) {
+    
+    try {
+      
+      var res = await axios.post("http://localhost:3000/api/users/login", {
+        username: username,
+        password: pass,
+      });
+      var admin = await axios.post("http://localhost:3000/api/admin/login", {
+        username: username,
+        password: pass,
+      });
+      console.log(res,admin);
+    } catch (error) {
+      console.log(error.message)
+      var err=error.message
+    }
+    if(admin.data.status=="success"){
+      setCookies("access_token_admin", admin.data.data.jwt_token);
+      nav("/adminhome");
+    }
+    else if(res.data.status=="success" && res.data.data.userid) {
       setCookies("access_token", res.data.data.jwt_token);
       window.localStorage.setItem("userid",res.data.data.userid)
       nav(`/main/${username}`);
+    }else{
+      alert(err)
     }
+
+
+    
   };
 
   return (

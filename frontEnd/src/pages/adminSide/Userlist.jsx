@@ -2,11 +2,12 @@ import React, { useContext } from "react";
 import { Users } from "../../Context/Users";
 import { Col, Row, Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import { useCookies } from "react-cookie";
 function Userlist() {
   const { state } = useContext(Users);
   const dup = [...state];
   const nav = useNavigate();
+  const [cookie]=useCookies()
   console.log("addprod");
   return (
     <Row className="bg-dark-subtle h-100 overflow-auto ">
