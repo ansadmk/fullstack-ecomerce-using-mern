@@ -19,12 +19,12 @@ function Addproduct() {
     const price = e.target.price.value;
     const description = e.target.description.value;
     const img = e.target.img.value;
-    data.append("title",title)
-    data.append("price",price)
-    data.append("description",description)
-    data.append("image",img)
-    data.append("category",catagory)
-    await axios.post("http://localhost:3000/api/admin/products",data,{headers:{Authorization:`Bearer ${cookie.access_token_admin}`}})
+    // data.append("title",title)
+    // data.append("price",price)
+    // data.append("description",description)
+    // data.append("image",img)
+    // data.append("category",catagory)
+    // await axios.post("http://localhost:3000/api/admin/products",data,{headers:{Authorization:`Bearer ${cookie.access_token_admin}`}})
     if (catagory != "") {
       setProduct([
         ...product,

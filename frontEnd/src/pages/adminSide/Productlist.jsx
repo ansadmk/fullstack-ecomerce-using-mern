@@ -1,18 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Users } from "../../Context/Users";
 import { Col, Row, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AdminMap from "../../Components/AdminMap";
+import axios from "axios";
 
 function Productlist() {
   const { product } = useContext(Users);
   const [dum, setDum] = useState(1);
   const all = [...product];
-  const [dup1, setDup] = useState([...product]);
+  const [dup1, setDup] = useState([]);
   const nav = useNavigate();
   console.log("addprod");
-  const Catprod = all.filter((a) => a.category == "cat");
-  const Dogprod = all.filter((a) => a.category == "dog");
+  // const Catprod = all.filter((a) => a.category == "cat");
+  // const Dogprod = all.filter((a) => a.category == "dog");
+  useEffect(async ()=>{
+  var prods=await axios.get("http://localhost:3000/api/admin/products",{headers:{
+    authorization:"Bearer"+" "+cookie.access_token_admin
+   }})
+   const cat=await axios.get(`http://localhost:3000/api/admin/product?category=cat`,{headers:{
+    authorization:"Bearer"+" "+cookie.access_token_admin
+   }})
+
+   const dog=await axios.get(`http://localhost:3000/api/admin/product?category=dog`,{headers:{
+    authorization:"Bearer"+" "+cookie.access_token_admin
+   }})
+   var Catprod=cat.data.data
+   var Dogprod=dog.data.data
+   setDup(prods.data.data)
+  },[])
 
   return (
     <div className="bg-dark-subtle h-100 overflow-auto ">
