@@ -4,8 +4,9 @@ import { Col, Row, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AdminMap from "../../Components/AdminMap";
 import axios from "axios";
-
+import { useCookies } from "react-cookie";
 function Productlist() {
+  const [cookie]=useCookies()
   const { product } = useContext(Users);
   const [dum, setDum] = useState(1);
   const all = [...product];
@@ -18,25 +19,39 @@ function Productlist() {
   var prods=await axios.get("http://localhost:3000/api/admin/products",{headers:{
     authorization:"Bearer"+" "+cookie.access_token_admin
    }})
-   const cat=await axios.get(`http://localhost:3000/api/admin/product?category=cat`,{headers:{
-    authorization:"Bearer"+" "+cookie.access_token_admin
-   }})
-
-   const dog=await axios.get(`http://localhost:3000/api/admin/product?category=dog`,{headers:{
-    authorization:"Bearer"+" "+cookie.access_token_admin
-   }})
-   var Catprod=cat.data.data
-   var Dogprod=dog.data.data
+   
    setDup(prods.data.data)
   },[])
+ async function catagory(cata) {
+   
+      const prods=await axios.get("http://localhost:3000/api/admin/products",{headers:{
+    authorization:"Bearer"+" "+cookie.access_token_admin
+   }})
+       const cat=await axios.get(`http://localhost:3000/api/admin/product?category=cat`,{headers:{
+        authorization:"Bearer"+" "+cookie.access_token_admin
+       }})
+    
+       const dog=await axios.get(`http://localhost:3000/api/admin/product?category=dog`,{headers:{
+        authorization:"Bearer"+" "+cookie.access_token_admin
+       }})
+       console.log(cat,dog);
+       if (cata=="dog"){
+        setDup(dog.data.data)
+       }else if(cata=="cat"){
+       setDup(cat.data.data)}
+       else if(cata=="all"){
+        setDup(prods.data.data)
+       }
+      
+  }
 
   return (
     <div className="bg-dark-subtle h-100 overflow-auto ">
       <h1 className="text-center mt-5 ">Product List</h1>
       <div className="justify-content-center mt-3 d-flex gap-1">
-        <Button onClick={() => setDup(Catprod)}>Cat</Button>&nbsp;&nbsp;
-        <Button onClick={() => setDup(Dogprod)}>Dog</Button>&nbsp;&nbsp;
-        <Button onClick={() => setDup((d) => (d = all))}>All</Button>
+        <Button onClick={() => catagory("cat")}>Cat</Button>&nbsp;&nbsp;
+        <Button onClick={() => catagory("dog")}>Dog</Button>&nbsp;&nbsp;
+        <Button onClick={() => catagory("all")}>All</Button>
         
         <Button onClick={() => nav("/adminhome/addproduct")}>
           + Add Product
