@@ -12,36 +12,40 @@ function Addproduct() {
   console.log("addprod");
   const handleSubmit = async (e) => {
     e.preventDefault();
-     const data=new FormData()
+     
      console.log( e.target.img);
     const catagory = e.target.catagory.value;
     const title = e.target.title.value;
     const price = e.target.price.value;
     const description = e.target.description.value;
-    const img = e.target.img.value;
-    // data.append("title",title)
-    // data.append("price",price)
-    // data.append("description",description)
-    // data.append("image",img)
-    // data.append("category",catagory)
-    // await axios.post("http://localhost:3000/api/admin/products",data,{headers:{Authorization:`Bearer ${cookie.access_token_admin}`}})
-    if (catagory != "") {
-      setProduct([
-        ...product,
-        {
-          id: Math.random(),
-          qty: 1,
-          category: catagory,
-          name: title,
-          price: price,
-          img: img,
+    const img = e.target.img;
+    console.log(img);
+    
+    // if (catagory != "") {
+    //   await axios.post("http://localhost:3000/api/admin/products",{
+    //     "title": title,
+    //     "description": description,
+    //     "price": price,
+    //     "image": img,
+    //     "category": catagory,
+    //   },{headers:{Authorization:`Bearer ${cookie.access_token_admin}`}})
+    //   // setProduct([
+    //   //   ...product,
+    //   //   {
+    //   //     id: Math.random(),
+    //   //     qty: 1,
+    //   //     category: catagory,
+    //   //     name: title,
+    //   //     price: price,
+    //   //     img: img,
           
-        },
-      ]);
-      nav("/adminhome/Productlist");  
-    } else {
-      alert("catagory required");
-    }
+    //   //   },
+    //   // ]);
+    //   nav("/adminhome/Productlist");
+      
+    // } else {
+    //   alert("catagory required");
+    // }
     e.target.reset();
   };
   return (
@@ -67,8 +71,8 @@ function Addproduct() {
                   required
                 />
                  <Form.Control
-                  type="text"
-                  placeholder="Name of the product"
+                  type="textarea"
+                  placeholder="description"
                   id="description"
                   required
                 />

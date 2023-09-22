@@ -15,12 +15,15 @@ function Productlist() {
   console.log("addprod");
   // const Catprod = all.filter((a) => a.category == "cat");
   // const Dogprod = all.filter((a) => a.category == "dog");
-  useEffect(async ()=>{
-  var prods=await axios.get("http://localhost:3000/api/admin/products",{headers:{
-    authorization:"Bearer"+" "+cookie.access_token_admin
-   }})
-   
-   setDup(prods.data.data)
+  async function r(){
+    var prods=await axios.get("http://localhost:3000/api/admin/products",{headers:{
+      authorization:"Bearer"+" "+cookie.access_token_admin
+    }})
+    
+    setDup(prods.data.data)
+  }
+  useEffect(()=>{
+    r()
   },[])
  async function catagory(cata) {
    

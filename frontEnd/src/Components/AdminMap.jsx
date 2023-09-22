@@ -6,7 +6,7 @@ function AdminMap({ dup1, product, nav, setDup }) {
       {dup1 == "" ? (
         <h1>Nothing to see here....</h1>
       ) : (
-        dup1.map((a, index) => (
+        dup1?.map((a, index) => (
           
           <Card className="m-2 p-3 rounded-4 hover d-flex p-0 m-0 shadow w-100 " style={{ maxHeight: "200px"}}>
             <div onClick={() => nav(`/adminhome/ProductDetails/${a._id}`)} className="d-flex w-100  overflow-auto " >
